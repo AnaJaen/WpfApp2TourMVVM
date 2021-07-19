@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="WpfApp2TourMVVM_6AKIF_JaenV.Fremdenfbearb"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp2TourMVVM_6AKIF_JaenV"
+             xmlns:localv="clr-namespace:WpfApp2TourMVVM_6AKIF_JaenV.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <!--Die Instanz von dieser Klasse legen-->
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="vm" ObjectType="{x:Type localv:VMFremdenfbearb}"/>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding Source ={StaticResource vm} }"> <!--DataContext im Struktur-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Überschriften-->
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Fremdenführer bearbeiten"
+                  Margin="5 9 0 5" FontSize="16" FontWeight="Bold" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Sprache" Margin="0 5 0 5" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="ID - Fremdenführername" Margin="0 5 0 5" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="Fremdenführerdaten" Margin="0 5 0 5" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+      
+        <!--Spalte 1-->
+        <ListBox Grid.Row="2" Grid.Column="0"
+                 ItemsSource="{Binding Path=AlleSprachen}"
+                 DisplayMemberPath="S_Language"
+                 SelectedValuePath="S_Sprach_Id"
+                 SelectedValue="{Binding Path=SelectedSprache, Mode=OneWayToSource, BindsDirectlyToSource=True}"/>
+                
+
+        <!--Spalte 2-->
+        <ListBox Grid.Row="2" Grid.Column="1"
+                 ItemsSource="{Binding IDundFremdenfuehrer}"
+              
+            SelectedItem="{Binding SelectedFremdenfuehrerID, Mode=TwoWay, BindsDirectlyToSource=True}">
+            <ListBox.ItemTemplate>
+                <!--Itemtemplate notwendig, denn der PK besteht aus mehreren Felder (Id, Vorname, Nachname)-->
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding F_Fremdenfuehrer_Id}"/>
+                        <Run Text=" - "/>
+                        <Run Text="{Binding F_Vorname}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding F_Nachname}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--Spalte 3-->
+        <StackPanel Grid.Column="2" Grid.Row="2" Margin="12"
+                    DataContext="{Binding SelectedFremdenfuehrerID}">
+            <TextBlock Text="Mitarbeiter_ID" Margin="0 0 0 3" Padding="3"/>
+            <TextBlock Text="{Binding F_Fremdenfuehrer_Id}" Margin="0 0 0 3" Padding="3"/>
+            <TextBlock Text="Vorname"/>
+            <TextBlock Text="{Binding F_Vorname}" Margin="0 0 0 3" Padding="3"/>
+            <TextBlock Text="Nachname"/>
+            <TextBlock Text="{Binding F_Nachname}" Margin="0 0 0 3" Padding="3"/>
+
+            <Button Content="Neuer Fremdenfuhrer" Margin="5 32 5 3" Padding="5"
+                    Command="{Binding NewCommand}"/>
+            <Button Content="Lösche Fremdenführer" Margin="5 5 5 3" Padding="5"
+                    Command="{Binding DeleteCommand}"/>
+            <Button Content="Speichern" Margin="5 5 5 3" Padding="5"
+                    Command="{Binding SaveCommand}"/>
+            <TextBlock x:Name="fehler" TextWrapping="Wrap"/>
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b0813eccc499409aa7647080ca4db644" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="Tour_DBModel.Buchung" Width="1.5" PointX="5.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tour_DBModel.Fremdenfuehrer" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tour_DBModel.Kunde" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tour_DBModel.Sprache" Width="1.5" PointX="0.625" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tour_DBModel.Tour" Width="1.5" PointX="7.625" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tour_DBModel.Treffpunkt" Width="1.5" PointX="7.625" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="Tour_DBModel.FK_Buchung_Fremdenfuehhrer" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Buchung_Kunde" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Buchung_Sprache" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Buchung_Tour" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Buchung_Treffpunkt" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Treffpunkt_Buchung" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Fremdenfuehrer_Sprache" ManuallyRouted="false" />
+        <AssociationConnector Association="Tour_DBModel.FK_Treffpunkt_Tour" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

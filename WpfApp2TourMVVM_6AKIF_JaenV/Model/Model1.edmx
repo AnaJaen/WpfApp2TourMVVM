@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Tour_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Buchung">
+          <Key>
+            <PropertyRef Name="B_Buchung_Id" />
+          </Key>
+          <Property Name="B_Buchung_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="B_Datum" Type="date" />
+          <Property Name="B_Personenanzahl" Type="int" />
+          <Property Name="B_Preis" Type="nvarchar" MaxLength="50" />
+          <Property Name="B_K_Kunde_Id" Type="int" />
+          <Property Name="B_To_Tour_Id" Type="smallint" />
+          <Property Name="B_F_Fremdenfuehrer_Id" Type="smallint" />
+          <Property Name="B_S_Sprach_Id" Type="smallint" />
+          <Property Name="B_T_Treffpunkt_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Fremdenfuehrer">
+          <Key>
+            <PropertyRef Name="F_Fremdenfuehrer_Id" />
+          </Key>
+          <Property Name="F_Fremdenfuehrer_Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F_Vorname" Type="nchar" MaxLength="10" />
+          <Property Name="F_Nachname" Type="nchar" MaxLength="10" />
+          <Property Name="F_S_Sprach_Id" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Kunde">
+          <Key>
+            <PropertyRef Name="K_Kunde_Id" />
+          </Key>
+          <Property Name="K_Kunde_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="K_Vorname" Type="nchar" MaxLength="15" />
+          <Property Name="K_Nachname" Type="nchar" MaxLength="25" />
+          <Property Name="K_GebDatum" Type="date" />
+          <Property Name="K_Strasse" Type="nchar" MaxLength="30" />
+          <Property Name="K_Hausnr" Type="nchar" MaxLength="10" />
+          <Property Name="K_Ort" Type="nchar" MaxLength="30" />
+          <Property Name="K_Land" Type="nchar" MaxLength="30" />
+          <Property Name="K_PLZ" Type="nchar" MaxLength="10" />
+          <Property Name="K_Email" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sprache">
+          <Key>
+            <PropertyRef Name="S_Sprach_Id" />
+          </Key>
+          <Property Name="S_Sprach_Id" Type="smallint" Nullable="false" />
+          <Property Name="S_Language" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="To_Tour_Id" />
+          </Key>
+          <Property Name="To_Tour_Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="To_Bezeichnung" Type="nchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="Treffpunkt">
+          <Key>
+            <PropertyRef Name="T_Treffpunkt_Id" />
+          </Key>
+          <Property Name="T_Treffpunkt_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="T_Strasse" Type="nchar" MaxLength="120" />
+          <Property Name="T_Hausnr" Type="nchar" MaxLength="10" />
+          <Property Name="T_Ort" Type="nchar" MaxLength="30" />
+          <Property Name="T_PLZ" Type="nchar" MaxLength="10" />
+          <Property Name="T_B_Buchung_Id" Type="int" />
+          <Property Name="T_To_Tour_Id" Type="smallint" />
+        </EntityType>
+        <Association Name="FK_Buchung_Fremdenfuehhrer">
+          <End Role="Fremdenfuehrer" Type="Self.Fremdenfuehrer" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fremdenfuehrer">
+              <PropertyRef Name="F_Fremdenfuehrer_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_F_Fremdenfuehrer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Kunde">
+          <End Role="Kunde" Type="Self.Kunde" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunde">
+              <PropertyRef Name="K_Kunde_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_K_Kunde_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Sprache">
+          <End Role="Sprache" Type="Self.Sprache" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprache">
+              <PropertyRef Name="S_Sprach_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_S_Sprach_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Tour">
+          <End Role="Tour" Type="Self.Tour" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="To_Tour_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_To_Tour_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Treffpunkt">
+          <End Role="Treffpunkt" Type="Self.Treffpunkt" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treffpunkt">
+              <PropertyRef Name="T_Treffpunkt_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_T_Treffpunkt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fremdenfuehrer_Sprache">
+          <End Role="Sprache" Type="Self.Sprache" Multiplicity="0..1" />
+          <End Role="Fremdenfuehrer" Type="Self.Fremdenfuehrer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprache">
+              <PropertyRef Name="S_Sprach_Id" />
+            </Principal>
+            <Dependent Role="Fremdenfuehrer">
+              <PropertyRef Name="F_S_Sprach_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treffpunkt_Buchung">
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="0..1" />
+          <End Role="Treffpunkt" Type="Self.Treffpunkt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buchung">
+              <PropertyRef Name="B_Buchung_Id" />
+            </Principal>
+            <Dependent Role="Treffpunkt">
+              <PropertyRef Name="T_B_Buchung_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treffpunkt_Tour">
+          <End Role="Tour" Type="Self.Tour" Multiplicity="0..1" />
+          <End Role="Treffpunkt" Type="Self.Treffpunkt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="To_Tour_Id" />
+            </Principal>
+            <Dependent Role="Treffpunkt">
+              <PropertyRef Name="T_To_Tour_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Tour_DBModelStoreContainer">
+          <EntitySet Name="Buchung" EntityType="Self.Buchung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fremdenfuehrer" EntityType="Self.Fremdenfuehrer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kunde" EntityType="Self.Kunde" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sprache" EntityType="Self.Sprache" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tour" EntityType="Self.Tour" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treffpunkt" EntityType="Self.Treffpunkt" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Buchung_Fremdenfuehhrer" Association="Self.FK_Buchung_Fremdenfuehhrer">
+            <End Role="Fremdenfuehrer" EntitySet="Fremdenfuehrer" />
+            <End Role="Buchung" EntitySet="Buchung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Kunde" Association="Self.FK_Buchung_Kunde">
+            <End Role="Kunde" EntitySet="Kunde" />
+            <End Role="Buchung" EntitySet="Buchung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Sprache" Association="Self.FK_Buchung_Sprache">
+            <End Role="Sprache" EntitySet="Sprache" />
+            <End Role="Buchung" EntitySet="Buchung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Tour" Association="Self.FK_Buchung_Tour">
+            <End Role="Tour" EntitySet="Tour" />
+            <End Role="Buchung" EntitySet="Buchung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Treffpunkt" Association="Self.FK_Buchung_Treffpunkt">
+            <End Role="Treffpunkt" EntitySet="Treffpunkt" />
+            <End Role="Buchung" EntitySet="Buchung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fremdenfuehrer_Sprache" Association="Self.FK_Fremdenfuehrer_Sprache">
+            <End Role="Sprache" EntitySet="Sprache" />
+            <End Role="Fremdenfuehrer" EntitySet="Fremdenfuehrer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treffpunkt_Buchung" Association="Self.FK_Treffpunkt_Buchung">
+            <End Role="Buchung" EntitySet="Buchung" />
+            <End Role="Treffpunkt" EntitySet="Treffpunkt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treffpunkt_Tour" Association="Self.FK_Treffpunkt_Tour">
+            <End Role="Tour" EntitySet="Tour" />
+            <End Role="Treffpunkt" EntitySet="Treffpunkt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Tour_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Buchung">
+          <Key>
+            <PropertyRef Name="B_Buchung_Id" />
+          </Key>
+          <Property Name="B_Buchung_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="B_Datum" Type="DateTime" Precision="0" />
+          <Property Name="B_Personenanzahl" Type="Int32" />
+          <Property Name="B_Preis" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="B_K_Kunde_Id" Type="Int32" />
+          <Property Name="B_To_Tour_Id" Type="Int16" />
+          <Property Name="B_F_Fremdenfuehrer_Id" Type="Int16" />
+          <Property Name="B_S_Sprach_Id" Type="Int16" />
+          <Property Name="B_T_Treffpunkt_Id" Type="Int32" />
+          <NavigationProperty Name="Fremdenfuehrer" Relationship="Self.FK_Buchung_Fremdenfuehhrer" FromRole="Buchung" ToRole="Fremdenfuehrer" />
+          <NavigationProperty Name="Kunde" Relationship="Self.FK_Buchung_Kunde" FromRole="Buchung" ToRole="Kunde" />
+          <NavigationProperty Name="Sprache" Relationship="Self.FK_Buchung_Sprache" FromRole="Buchung" ToRole="Sprache" />
+          <NavigationProperty Name="Tour" Relationship="Self.FK_Buchung_Tour" FromRole="Buchung" ToRole="Tour" />
+          <NavigationProperty Name="Treffpunkt" Relationship="Self.FK_Buchung_Treffpunkt" FromRole="Buchung" ToRole="Treffpunkt" />
+          <NavigationProperty Name="Treffpunkts" Relationship="Self.FK_Treffpunkt_Buchung" FromRole="Buchung" ToRole="Treffpunkt" />
+        </EntityType>
+        <EntityType Name="Fremdenfuehrer">
+          <Key>
+            <PropertyRef Name="F_Fremdenfuehrer_Id" />
+          </Key>
+          <Property Name="F_Fremdenfuehrer_Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F_Vorname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="F_Nachname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="F_S_Sprach_Id" Type="Int16" />
+          <NavigationProperty Name="Buchungs" Relationship="Self.FK_Buchung_Fremdenfuehhrer" FromRole="Fremdenfuehrer" ToRole="Buchung" />
+          <NavigationProperty Name="Sprache" Relationship="Self.FK_Fremdenfuehrer_Sprache" FromRole="Fremdenfuehrer" ToRole="Sprache" />
+        </EntityType>
+        <EntityType Name="Kunde">
+          <Key>
+            <PropertyRef Name="K_Kunde_Id" />
+          </Key>
+          <Property Name="K_Kunde_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="K_Vorname" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="K_Nachname" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="K_GebDatum" Type="DateTime" Precision="0" />
+          <Property Name="K_Strasse" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="K_Hausnr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="K_Ort" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="K_Land" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="K_PLZ" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="K_Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Buchungs" Relationship="Self.FK_Buchung_Kunde" FromRole="Kunde" ToRole="Buchung" />
+        </EntityType>
+        <EntityType Name="Sprache">
+          <Key>
+            <PropertyRef Name="S_Sprach_Id" />
+          </Key>
+          <Property Name="S_Sprach_Id" Type="Int16" Nullable="false" />
+          <Property Name="S_Language" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Buchungs" Relationship="Self.FK_Buchung_Sprache" FromRole="Sprache" ToRole="Buchung" />
+          <NavigationProperty Name="Fremdenfuehrers" Relationship="Self.FK_Fremdenfuehrer_Sprache" FromRole="Sprache" ToRole="Fremdenfuehrer" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="To_Tour_Id" />
+          </Key>
+          <Property Name="To_Tour_Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="To_Bezeichnung" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Buchungs" Relationship="Self.FK_Buchung_Tour" FromRole="Tour" ToRole="Buchung" />
+          <NavigationProperty Name="Treffpunkts" Relationship="Self.FK_Treffpunkt_Tour" FromRole="Tour" ToRole="Treffpunkt" />
+        </EntityType>
+        <EntityType Name="Treffpunkt">
+          <Key>
+            <PropertyRef Name="T_Treffpunkt_Id" />
+          </Key>
+          <Property Name="T_Treffpunkt_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="T_Strasse" Type="String" MaxLength="120" FixedLength="true" Unicode="true" />
+          <Property Name="T_Hausnr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="T_Ort" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="T_PLZ" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="T_B_Buchung_Id" Type="Int32" />
+          <Property Name="T_To_Tour_Id" Type="Int16" />
+          <NavigationProperty Name="Buchungs" Relationship="Self.FK_Buchung_Treffpunkt" FromRole="Treffpunkt" ToRole="Buchung" />
+          <NavigationProperty Name="Buchung" Relationship="Self.FK_Treffpunkt_Buchung" FromRole="Treffpunkt" ToRole="Buchung" />
+          <NavigationProperty Name="Tour" Relationship="Self.FK_Treffpunkt_Tour" FromRole="Treffpunkt" ToRole="Tour" />
+        </EntityType>
+        <Association Name="FK_Buchung_Fremdenfuehhrer">
+          <End Role="Fremdenfuehrer" Type="Self.Fremdenfuehrer" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fremdenfuehrer">
+              <PropertyRef Name="F_Fremdenfuehrer_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_F_Fremdenfuehrer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Kunde">
+          <End Role="Kunde" Type="Self.Kunde" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunde">
+              <PropertyRef Name="K_Kunde_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_K_Kunde_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Sprache">
+          <End Role="Sprache" Type="Self.Sprache" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprache">
+              <PropertyRef Name="S_Sprach_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_S_Sprach_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Tour">
+          <End Role="Tour" Type="Self.Tour" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="To_Tour_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_To_Tour_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Buchung_Treffpunkt">
+          <End Role="Treffpunkt" Type="Self.Treffpunkt" Multiplicity="0..1" />
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treffpunkt">
+              <PropertyRef Name="T_Treffpunkt_Id" />
+            </Principal>
+            <Dependent Role="Buchung">
+              <PropertyRef Name="B_T_Treffpunkt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treffpunkt_Buchung">
+          <End Role="Buchung" Type="Self.Buchung" Multiplicity="0..1" />
+          <End Role="Treffpunkt" Type="Self.Treffpunkt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buchung">
+              <PropertyRef Name="B_Buchung_Id" />
+            </Principal>
+            <Dependent Role="Treffpunkt">
+              <PropertyRef Name="T_B_Buchung_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fremdenfuehrer_Sprache">
+          <End Role="Sprache" Type="Self.Sprache" Multiplicity="0..1" />
+          <End Role="Fremdenfuehrer" Type="Self.Fremdenfuehrer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sprache">
+              <PropertyRef Name="S_Sprach_Id" />
+            </Principal>
+            <Dependent Role="Fremdenfuehrer">
+              <PropertyRef Name="F_S_Sprach_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treffpunkt_Tour">
+          <End Role="Tour" Type="Self.Tour" Multiplicity="0..1" />
+          <End Role="Treffpunkt" Type="Self.Treffpunkt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tour">
+              <PropertyRef Name="To_Tour_Id" />
+            </Principal>
+            <Dependent Role="Treffpunkt">
+              <PropertyRef Name="T_To_Tour_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Tour_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Buchungs" EntityType="Self.Buchung" />
+          <EntitySet Name="Fremdenfuehrers" EntityType="Self.Fremdenfuehrer" />
+          <EntitySet Name="Kundes" EntityType="Self.Kunde" />
+          <EntitySet Name="Spraches" EntityType="Self.Sprache" />
+          <EntitySet Name="Tours" EntityType="Self.Tour" />
+          <EntitySet Name="Treffpunkts" EntityType="Self.Treffpunkt" />
+          <AssociationSet Name="FK_Buchung_Fremdenfuehhrer" Association="Self.FK_Buchung_Fremdenfuehhrer">
+            <End Role="Fremdenfuehrer" EntitySet="Fremdenfuehrers" />
+            <End Role="Buchung" EntitySet="Buchungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Kunde" Association="Self.FK_Buchung_Kunde">
+            <End Role="Kunde" EntitySet="Kundes" />
+            <End Role="Buchung" EntitySet="Buchungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Sprache" Association="Self.FK_Buchung_Sprache">
+            <End Role="Sprache" EntitySet="Spraches" />
+            <End Role="Buchung" EntitySet="Buchungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Tour" Association="Self.FK_Buchung_Tour">
+            <End Role="Tour" EntitySet="Tours" />
+            <End Role="Buchung" EntitySet="Buchungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Buchung_Treffpunkt" Association="Self.FK_Buchung_Treffpunkt">
+            <End Role="Treffpunkt" EntitySet="Treffpunkts" />
+            <End Role="Buchung" EntitySet="Buchungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treffpunkt_Buchung" Association="Self.FK_Treffpunkt_Buchung">
+            <End Role="Buchung" EntitySet="Buchungs" />
+            <End Role="Treffpunkt" EntitySet="Treffpunkts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fremdenfuehrer_Sprache" Association="Self.FK_Fremdenfuehrer_Sprache">
+            <End Role="Sprache" EntitySet="Spraches" />
+            <End Role="Fremdenfuehrer" EntitySet="Fremdenfuehrers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treffpunkt_Tour" Association="Self.FK_Treffpunkt_Tour">
+            <End Role="Tour" EntitySet="Tours" />
+            <End Role="Treffpunkt" EntitySet="Treffpunkts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Tour_DBModelStoreContainer" CdmEntityContainer="Tour_DBEntities">
+          <EntitySetMapping Name="Buchungs">
+            <EntityTypeMapping TypeName="Tour_DBModel.Buchung">
+              <MappingFragment StoreEntitySet="Buchung">
+                <ScalarProperty Name="B_Buchung_Id" ColumnName="B_Buchung_Id" />
+                <ScalarProperty Name="B_Datum" ColumnName="B_Datum" />
+                <ScalarProperty Name="B_Personenanzahl" ColumnName="B_Personenanzahl" />
+                <ScalarProperty Name="B_Preis" ColumnName="B_Preis" />
+                <ScalarProperty Name="B_K_Kunde_Id" ColumnName="B_K_Kunde_Id" />
+                <ScalarProperty Name="B_To_Tour_Id" ColumnName="B_To_Tour_Id" />
+                <ScalarProperty Name="B_F_Fremdenfuehrer_Id" ColumnName="B_F_Fremdenfuehrer_Id" />
+                <ScalarProperty Name="B_S_Sprach_Id" ColumnName="B_S_Sprach_Id" />
+                <ScalarProperty Name="B_T_Treffpunkt_Id" ColumnName="B_T_Treffpunkt_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fremdenfuehrers">
+            <EntityTypeMapping TypeName="Tour_DBModel.Fremdenfuehrer">
+              <MappingFragment StoreEntitySet="Fremdenfuehrer">
+                <ScalarProperty Name="F_Fremdenfuehrer_Id" ColumnName="F_Fremdenfuehrer_Id" />
+                <ScalarProperty Name="F_Vorname" ColumnName="F_Vorname" />
+                <ScalarProperty Name="F_Nachname" ColumnName="F_Nachname" />
+                <ScalarProperty Name="F_S_Sprach_Id" ColumnName="F_S_Sprach_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kundes">
+            <EntityTypeMapping TypeName="Tour_DBModel.Kunde">
+              <MappingFragment StoreEntitySet="Kunde">
+                <ScalarProperty Name="K_Kunde_Id" ColumnName="K_Kunde_Id" />
+                <ScalarProperty Name="K_Vorname" ColumnName="K_Vorname" />
+                <ScalarProperty Name="K_Nachname" ColumnName="K_Nachname" />
+                <ScalarProperty Name="K_GebDatum" ColumnName="K_GebDatum" />
+                <ScalarProperty Name="K_Strasse" ColumnName="K_Strasse" />
+                <ScalarProperty Name="K_Hausnr" ColumnName="K_Hausnr" />
+                <ScalarProperty Name="K_Ort" ColumnName="K_Ort" />
+                <ScalarProperty Name="K_Land" ColumnName="K_Land" />
+                <ScalarProperty Name="K_PLZ" ColumnName="K_PLZ" />
+                <ScalarProperty Name="K_Email" ColumnName="K_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spraches">
+            <EntityTypeMapping TypeName="Tour_DBModel.Sprache">
+              <MappingFragment StoreEntitySet="Sprache">
+                <ScalarProperty Name="S_Sprach_Id" ColumnName="S_Sprach_Id" />
+                <ScalarProperty Name="S_Language" ColumnName="S_Language" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tours">
+            <EntityTypeMapping TypeName="Tour_DBModel.Tour">
+              <MappingFragment StoreEntitySet="Tour">
+                <ScalarProperty Name="To_Tour_Id" ColumnName="To_Tour_Id" />
+                <ScalarProperty Name="To_Bezeichnung" ColumnName="To_Bezeichnung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Treffpunkts">
+            <EntityTypeMapping TypeName="Tour_DBModel.Treffpunkt">
+              <MappingFragment StoreEntitySet="Treffpunkt">
+                <ScalarProperty Name="T_Treffpunkt_Id" ColumnName="T_Treffpunkt_Id" />
+                <ScalarProperty Name="T_Strasse" ColumnName="T_Strasse" />
+                <ScalarProperty Name="T_Hausnr" ColumnName="T_Hausnr" />
+                <ScalarProperty Name="T_Ort" ColumnName="T_Ort" />
+                <ScalarProperty Name="T_PLZ" ColumnName="T_PLZ" />
+                <ScalarProperty Name="T_B_Buchung_Id" ColumnName="T_B_Buchung_Id" />
+                <ScalarProperty Name="T_To_Tour_Id" ColumnName="T_To_Tour_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

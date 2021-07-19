@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="WpfApp2TourMVVM_6AKIF_JaenV.AboutUns"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp2TourMVVM_6AKIF_JaenV"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*" />
+            <RowDefinition Height="29*" />
+            <RowDefinition Height="141*" />
+            <RowDefinition Height="13*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"  Text="Tours AJ"  FontSize="23"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Height="32" Margin="103,3,102.333,2.333" Width="88" />
+
+        <TextBlock Grid.Row="1" Text=" Willkommen an Bord!" 
+                   HorizontalAlignment="Center"  FontSize="15" FontWeight="DemiBold" FontStyle="Italic" Padding="03" Margin="319,0.667,319,23.667" Width="162"/>
+
+        <StackPanel Grid.Row="2" Margin="20">
+            <Image  Source="Dog_logo.jpg" HorizontalAlignment="Center" VerticalAlignment="Center" Height="270" Width="Auto"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
